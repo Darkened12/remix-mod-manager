@@ -1,0 +1,104 @@
+Manager:
+    id: scr1
+    canvas.before:
+        Color:
+            rgba: .1, .1, .3, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'assets/BB.jpg'
+    MainScreen:
+    DoneScreen:
+    CopyingScreen:
+    ErrorScreen:
+    HelpScreen:
+
+<MyBox@BoxLayout>:
+    orientation: 'vertical'
+    size_hint: .6, .6
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    spacing: 15
+
+<MyBtn@Button>:
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    size_hint: .4, .4
+
+<MainScreen>:
+
+    name: 'main_screen'
+    id: sc1
+    MyBox:
+        Label:
+            text: 'BBCF Remix Manager'
+            font_size: 30
+            font_name: 'assets/blazblue.ttf'
+
+        TextInput:
+            id: txt_in
+            size_hint: 1, .4
+            font_size: 11
+            text: app.bb_path
+
+        MyBtn:
+            text: 'Mod'
+            on_release: app.mod('mod')
+        MyBtn:
+            text: 'Unmod'
+            on_release: app.mod('unmod')
+        MyBtn:
+            text: 'Help'
+            on_release: app.screen_change('help_screen')
+
+
+<DoneScreen>:
+
+    name: 'done_screen'
+    MyBox:
+        Label:
+            text: 'Done'
+            font_size: 30
+        MyBtn:
+            text: 'Back'
+            on_release: app.screen_change('main_screen')
+        MyBtn:
+            text: 'Quit'
+            on_release: app.stop()
+<CopyingScreen>:
+
+    name: 'copying_screen'
+    MyBox:
+        Label:
+            text: 'Copying files (May take more than a minute)...'
+            font_size: 17
+<ErrorScreen>:
+
+    name: 'error_screen'
+    MyBox:
+        spacing: 0
+        Label:
+            text: "The path you provided is wrong. Make sure it is not \\BlazBlue Centralfiction\\data"
+            font_size: 12
+        Label:
+            text: 'It shoud be something like: "C:\\Steam\\steamapps\\common\\BlazBlue Centralfiction"'
+            font_size: 12
+        MyBtn:
+            text: 'Back'
+            on_release: app.screen_change('main_screen')
+
+<HelpScreen>:
+
+    name: 'help_screen'
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, .4
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        center: root.center
+
+        Label:
+            text: 'It should NOT be "\\Blazblue Centralfiction\\data".'
+        Label:
+            text: 'The contents within your "Remix Mod" folder should be the contents \n within the "data" folder from the Remix Mod you downloaded.'
+
+        MyBtn:
+            text: 'Back'
+            on_release: app.screen_change('main_screen')
